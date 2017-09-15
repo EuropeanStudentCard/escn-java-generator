@@ -3,19 +3,25 @@ package com.cnous.esc;
 import java.util.UUID;
 
 /**
- * Cette classe permet aux partenaires du projet « carte d’étudiant européenne » de générer par son intermédiaire un numéro unique de carte à partir de leurs logiciels (Système de gestion de carte, développements internes, scripts, etc.).
+ * Cette classe permet aux partenaires du projet « carte d’étudiant européenne »
+ * de générer par son intermédiaire un numéro unique de carte
+ * à partir de leurs logiciels (Système de gestion de carte, développements internes, scripts, etc.).
  * <p>
- * Le format est de 16 octets (128 bits) qui sont conformes à une structure spécifique. Pour rendre les choses confuses, il existe quelques structures différentes, mais la plus commune est la structure définie dans la RFC 4122 - et c'est la structure que nous allons utiliser pour notre guide GUID
+ * Le format est de 16 octets (128 bits) et conforme à la structure définie dans la RFC 4122 :
  * <p>
- * The variant of GUID we're creating defines the following fields
  * Octet 0-3: time_low The low field of the timestamp
+ * <p>
  * Octet 4-5: time_mid The middle field of the timestamp
+ * <p>
  * Octet 6-7: time_hi_and_version The high field of the timestamp multiplexed with the version number
+ * <p>
  * Octet 8: clock_seq_hi_and_reserved The high field of the clock sequence multiplexed with the variant
+ * <p>
  * Octet 9: clock_seq_low The low field of the clock sequence
+ * <p>
  * Octet 10-15: node The spatially unique node identifier
  *
- * @author Laurent Cernon www.amj-groupe.com
+ * @author www.amj-groupe.com
  * @since 14 septembre 2017
  */
 public class UuidFactory {
@@ -27,6 +33,7 @@ public class UuidFactory {
     private static String node = "";
 
     /**
+     * Cette méthode calcule un UUID à partir de 2 paramètres
      * @param prefixe Il permettra de distinguer les serveurs d’un même établissement
      * @param pic     Participant Identification Code
      * @return a CNOUS unique UUID

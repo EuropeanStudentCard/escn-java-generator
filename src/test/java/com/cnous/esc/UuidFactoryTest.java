@@ -21,15 +21,14 @@ public class UuidFactoryTest {
         Matcher m = p.matcher(returnTest);
         assertTrue(m.matches());
         assertEquals("066999859608", returnTest.substring(returnTest.length() - 12));
-    }
 
-    @Test
-    public void getNode() throws Exception {
 
     }
 
-    @Test
-    public void main() throws Exception {
-    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testIllegalArgumentException() throws Exception {
+        String returnTest;
 
+        returnTest = UuidFactory.getUuid(6666, "999859608");
+    }
 }

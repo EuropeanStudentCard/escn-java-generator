@@ -89,10 +89,10 @@ public class UuidFactory {
         prefixe = String.format("%03d", intPrefixe);
 
         if (!prefixe.matches("[0-9]{3}")) {
-            throw new Exception("Invalid Prefixe format");
+            throw new IllegalArgumentException("Invalid Prefixe format!");
         }
         if (!pic.matches("[0-9]{9}")) {
-            throw new Exception("Invalid PIC format");
+            throw new IllegalArgumentException("Invalid PIC format!");
         }
 
         concatID = prefixe.concat(pic);

@@ -1,7 +1,5 @@
 package com.cnous.esc;
 
-import java.util.UUID;
-
 /**
  * Cette classe permet aux partenaires du projet « carte d’étudiant européenne »
  * de générer par son intermédiaire un numéro unique de carte
@@ -126,7 +124,5 @@ public class UuidFactory {
 
             System.out.println(UuidFactory.getUuid(prefixe, pic));
         }
-
-        System.out.println(UUID.randomUUID());
     }
 }

@@ -15,20 +15,15 @@ public class UuidFactoryTest {
         Pattern p = Pattern.compile(uuidFormat);
         String returnTest;
 
-        UuidFactory uf = new UuidFactory();
         returnTest = UuidFactory.getUuid(66, "999859608");
 
         Matcher m = p.matcher(returnTest);
         assertTrue(m.matches());
         assertEquals("066999859608", returnTest.substring(returnTest.length() - 12));
-
-
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = UuidFactoryException.class)
     public void testIllegalArgumentException() throws Exception {
-        String returnTest;
-
-        returnTest = UuidFactory.getUuid(6666, "999859608");
+        UuidFactory.getUuid(6666, "999859608");
     }
 }

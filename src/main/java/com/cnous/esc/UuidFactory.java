@@ -28,18 +28,18 @@ public class UuidFactory {
 
     private static long time = 0, oldSysTime = 0;
     private static int clock, hits = 0;
-    private static String node = "";
 
     /**
      * Cette méthode calcule un UUID à partir de 2 paramètres
      * @param prefixe Il permettra de distinguer les serveurs d’un même établissement
      * @param pic     Participant Identification Code
      * @return a CNOUS unique UUID
+     * @author www.amj-groupe.com
      * @since 14 septembre 2017
      */
-    public static synchronized String getUuid(Integer prefixe, String pic) throws Exception {
+    public static synchronized String getUuid(Integer prefixe, String pic) throws InterruptedException, UuidFactoryException {
 
-        node = getNode(prefixe, pic);
+        String node = getNode(prefixe, pic);
 
         if (--hits > 0) ++time;
         else {
@@ -50,10 +50,7 @@ public class UuidFactory {
                 if (sysTime < oldSysTime) {       // SYSTEM CLOCK WAS SET BACK
                     clock = (++clock & 0x3fff) | 0x8000;
                 } else {           // REQUESTING UUIDs TOO FAST FOR SYSTEM CLOCK
-                    try {
-                        Thread.sleep(1);
-                    } catch (Exception e) {
-                    }
+                    Thread.sleep(1);
                     sysTime = System.currentTimeMillis();
                 }
             }
@@ -81,23 +78,23 @@ public class UuidFactory {
      * @param intPrefixe Il permet de distinguer les serveurs d’un même établissement
      * @param pic        Participant Identification Code
      * @return node
-     * a CNOUS unique UUID
+     * a node = prefixe + PIC
      * @throws "Invalid Prefixe format"  Si jamais le Préfixe est mal formé.
      * @throws "Invalid PIC format"  Si jamais le PIC est mal formé.
      * @author www.amj-groupe.com
      * @since 14 septembre 2017
      */
-    private static String getNode(Integer intPrefixe, String pic) throws Exception {
+    private static String getNode(Integer intPrefixe, String pic) throws UuidFactoryException {
         String concatID;
         String prefixe;
 
         prefixe = String.format("%03d", intPrefixe);
 
         if (!prefixe.matches("[0-9]{3}")) {
-            throw new IllegalArgumentException("Invalid Prefixe format!");
+            throw new UuidFactoryException("Invalid Prefixe format!");
         }
         if (!pic.matches("[0-9]{9}")) {
-            throw new IllegalArgumentException("Invalid PIC format!");
+            throw new UuidFactoryException("Invalid PIC format!");
         }
 
         concatID = prefixe.concat(pic);
@@ -107,22 +104,5 @@ public class UuidFactory {
         clock = ((int) (Math.random() * 0x3fff)) | 0x8000;
 
         return concatID;
-    }
-
-    /**
-     * Test method
-     *
-     * @param unused
-     */
-    public static void main(String[] unused) throws Exception {
-
-        String pic = "999859608";
-        Integer prefixe;
-
-        for (prefixe = 0; prefixe < 1000; ++prefixe) {
-
-
-            System.out.println(UuidFactory.getUuid(prefixe, pic));
-        }
     }
 }

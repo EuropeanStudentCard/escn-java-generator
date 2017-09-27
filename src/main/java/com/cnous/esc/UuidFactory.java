@@ -34,7 +34,6 @@ public class UuidFactory {
      * @param prefixe Il permettra de distinguer les serveurs d’un même établissement
      * @param pic     Participant Identification Code
      * @return a CNOUS unique UUID
-     * @author www.amj-groupe.com
      * @since 14 septembre 2017
      */
     public static synchronized String getUuid(Integer prefixe, String pic) throws InterruptedException, UuidFactoryException {

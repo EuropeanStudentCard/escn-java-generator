@@ -1,11 +1,9 @@
-package com.cnous.esc;
+package eu.europeanstudentcard.esc;
 
 /**
- * Cette classe permet aux partenaires du projet « carte d’étudiant européenne »
- * de générer par son intermédiaire un numéro unique de carte
- * à partir de leurs logiciels (Système de gestion de carte, développements internes, scripts, etc.).
+ * This class is used to generate unique European Student Card Number (ESCN) for the "european student card"
  * <p>
- * Le format est de 16 octets (128 bits) et conforme à la structure définie dans la RFC 4122 :
+ * This number is an UUID of 16 bytes (128 bits) and the generation algorithm is describe in RFC 4122 :
  * <p>
  * Octet 0-3: time_low The low field of the timestamp
  * <p>
@@ -19,10 +17,8 @@ package com.cnous.esc;
  * <p>
  * Octet 10-15: node The spatially unique node identifier
  *
- * @author www.amj-groupe.com
- * @since 14 septembre 2017
  */
-public class UuidFactory {
+public class EscnFactory {
     // Offset from 15 Oct 1582 to 1 Jan 1970
     private static final long OFFSET_MILLIS = 12219292800000L;
 
@@ -30,15 +26,14 @@ public class UuidFactory {
     private static int clock, hits = 0;
 
     /**
-     * Cette méthode calcule un UUID à partir de 2 paramètres
-     * @param prefixe Il permettra de distinguer les serveurs d’un même établissement
-     * @param pic     Participant Identification Code
-     * @return a CNOUS unique UUID
-     * @since 14 septembre 2017
+     * This method calculate an UUID from 2 parameters
+     * @param prefix To distinguish servers of a same institution
+     * @param pic Participant Identification Code
+     * @return a unique ESCN
      */
-    public static synchronized String getUuid(Integer prefixe, String pic) throws InterruptedException, UuidFactoryException {
+    public static synchronized String getEscn(Integer prefix, String pic) throws InterruptedException, EscnFactoryException {
 
-        String node = getNode(prefixe, pic);
+        String node = getNode(prefix, pic);
 
         if (--hits > 0) ++time;
         else {
@@ -70,33 +65,29 @@ public class UuidFactory {
     }
 
     /**
-     * Cette méthode calcule le node utilisé pour la création du UUID
-     * node = Prefixe + PIC
-     * Initialise également l'horloge.
+     * This method calculate a node used for the ESCN creation and initiate the clock
+     * node = Prefix + PIC
      *
-     * @param intPrefixe Il permet de distinguer les serveurs d’un même établissement
-     * @param pic        Participant Identification Code
+     * @param intPrefix To distinguish servers of a same institution
+     * @param pic Participant Identification Code
      * @return node
-     * a node = prefixe + PIC
-     * @throws "Invalid Prefixe format"  Si jamais le Préfixe est mal formé.
-     * @throws "Invalid PIC format"  Si jamais le PIC est mal formé.
-     * @author www.amj-groupe.com
-     * @since 14 septembre 2017
+     * @throws "Invalid Prefix format"  if the prefix is malformed
+     * @throws "Invalid PIC format"  if the PIC is malformed
      */
-    private static String getNode(Integer intPrefixe, String pic) throws UuidFactoryException {
+    private static String getNode(Integer intPrefix, String pic) throws EscnFactoryException {
         String concatID;
-        String prefixe;
+        String prefix;
 
-        prefixe = String.format("%03d", intPrefixe);
+        prefix = String.format("%03d", intPrefix);
 
-        if (!prefixe.matches("[0-9]{3}")) {
-            throw new UuidFactoryException("Invalid Prefixe format!");
+        if (!prefix.matches("[0-9]{3}")) {
+            throw new EscnFactoryException("Invalid Prefixe format!");
         }
         if (!pic.matches("[0-9]{9}")) {
-            throw new UuidFactoryException("Invalid PIC format!");
+            throw new EscnFactoryException("Invalid PIC format!");
         }
 
-        concatID = prefixe.concat(pic);
+        concatID = prefix.concat(pic);
 
 
         // 14 bit clock, set high 2 bits to '0001' for RFC 4122 variant 2

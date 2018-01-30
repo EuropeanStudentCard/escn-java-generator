@@ -1,21 +1,20 @@
-# CNOUS UUID (esc-uuid.jar)
+# ESCN Generator Java Library
 
-## Algorithme de génération
+## Goal
+This library can be used to generate unique European Student Card Number (ESCN) for the "european student card" partners.
 
-L’algorithme de génération de l’UUID à utiliser est celui standardisé selon la norme RFC-4122 version 1.   
-Cependant, Au lieu d’utiliser l’adresse physique MAC du serveur réalisant le calcul pour assurer l’unicité du numéro, celui-ci sera remplacé, comme le chapitre 4.5 de la RFC le permet, par un numéro sur 6 octet.  
+## Algorithm
 
-Pour cela, le « Participant Identification Code  » (PIC) de l’établissement sera utilisé. Ce numéro européen sur 9 caractères est unique pour chaque établissement européen. L’université de Poitiers, a, par exemple le PIC : 999859608. 
+The used algorithm to generate the ESCN is the RFC-4122 version 1. However, as allowed by the RFC, the number the physical address (MAC) used to ensure the uniqueness of the ESCN is replaced by another number of 48 bits :
 
-Ce numéro, préfixé par un chiffre sur trois caractères forme une valeur sur 6 octet. Exemple pour l’université de Poitiers : 001999859608.  
- 
-Le préfixe doit être un entier positif au format décimal sur 3 caractères. Il permettra de distinguer les serveurs d’un même établissement si cet établissement veut générer des UUID sur plusieurs serveurs.
+- A ```prefix``` (3 digits positive integer) to distinguish servers of a same institution
+- The ```Participant Identification Code (PIC)``` of the institution.  
 
-## Strucute de l'UUID
-L'uuid est composé de 16 octects :
+## ESCN Structure
+The ESCN is a UUID of 16 bytes
 * Octet 0-3: time_low The low field of the timestamp
 * Octet 4-5: time_mid The middle field of the timestamp
 * Octet 6-7: time_hi_and_version The high field of the timestamp multiplexed with the version number
 * Octet 8: clock_seq_hi_and_reserved The high field of the clock sequence multiplexed with the variant
 * Octet 9: clock_seq_low The low field of the clock sequence
-* Octet 10-15: node The spatially unique node identifier **=> dans note cas = Préfixe + PIC** 
+* Octet 10-15: node The spatially unique node identifier ** Prefix + PIC ** 

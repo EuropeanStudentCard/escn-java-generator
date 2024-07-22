@@ -12,9 +12,9 @@ The used algorithm to generate the ESCN is the RFC-4122 version 1. However, as a
 
 ## ESCN Structure
 The ESCN is a UUID of 16 bytes
-* Octet 0-3: time_low The low field of the timestamp
-* Octet 4-5: time_mid The middle field of the timestamp
-* Octet 6-7: time_hi_and_version The high field of the timestamp multiplexed with the version number
-* Octet 8: clock_seq_hi_and_reserved The high field of the clock sequence multiplexed with the variant
-* Octet 9: clock_seq_low The low field of the clock sequence
-* Octet 10-15: node The spatially unique node identifier ** Prefix + PIC ** 
+* Octet 0-3: time_low - The low field of the timestamp
+* Octet 4-5: time_mid - The middle field of the timestamp
+* Octet 6-7: time_hi_and_version - The high field of the timestamp multiplexed with the version number
+* Octet 8: clock_seq_hi_and_reserved - The high field of the clock sequence multiplexed with the variant
+* Octet 9: clock_seq_low - The low field of the clock sequence
+* Octet 10-15: node - The spatially unique node identifier **"Prefix + PIC"** 

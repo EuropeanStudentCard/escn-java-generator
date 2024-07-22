@@ -3,7 +3,7 @@ package eu.europeanstudentcard.esc;
 /**
  * This class is used to generate unique European Student Card Number (ESCN) for the "european student card"
  * <p>
- * This number is an UUID of 16 bytes (128 bits) and the generation algorithm is describe in RFC 4122 :
+ * This number is an UUID of 16 bytes (128 bits) and the generation algorithm is described in RFC 4122 :
  * <p>
  * Octet 0-3: time_low The low field of the timestamp
  * <p>
@@ -81,7 +81,7 @@ public class EscnFactory {
         prefix = String.format("%03d", intPrefix);
 
         if (!prefix.matches("[0-9]{3}")) {
-            throw new EscnFactoryException("Invalid Prefixe format!");
+            throw new EscnFactoryException("Invalid Prefix format!");
         }
         if (!pic.matches("[0-9]{9}")) {
             throw new EscnFactoryException("Invalid PIC format!");

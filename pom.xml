@@ -6,7 +6,7 @@
 
     <groupId>eu.europeanstudentcard</groupId>
     <artifactId>escn-generator</artifactId>
-    <version>1.2.0</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>escn-generator</name>
@@ -24,8 +24,30 @@
     </licenses>
 
     <scm>
+        <connection>scm:git:git@github.com:EuropeanStudentCard/escn-java-generator.git</connection>
+        <developerConnection>scm:git:git@github.com:EuropeanStudentCard/ecn-java-generator.git</developerConnection>
         <url>https://github.com/EuropeanStudentCard/escn-java-generator</url>
     </scm>
+
+    <developers>
+        <developer>
+            <name>NTT Data</name>
+            <email>esc.support@nttdata.com</email>
+            <url>https://www.nttdata.com/</url>
+            <organization>com.nttdata</organization>
+            <organizationUrl>https://github.com/EuropeanStudentCard</organizationUrl>
+        </developer>
+    </developers>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <central.publishing.plugin>0.3.0</central.publishing.plugin>
+        <source.plugin>3.3.0</source.plugin>
+        <javadoc.plugin>3.6.3</javadoc.plugin>
+        <gpg.plugin>3.1.0</gpg.plugin>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -35,5 +57,78 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <!-- required, used in .github/workflows/sonatype-publish.yml -->
+            <id>sonatypeDeploy</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>${central.publishing.plugin}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>central</publishingServerId>
+                            <tokenAuth>true</tokenAuth>
+                            <autoPublish>true</autoPublish>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${source.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${javadoc.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadoc</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <stylesheet>java</stylesheet>
+                            <doclint>none</doclint>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${gpg.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

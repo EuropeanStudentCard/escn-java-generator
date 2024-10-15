@@ -6,7 +6,7 @@
 
     <groupId>eu.europeanstudentcard</groupId>
     <artifactId>escn-generator</artifactId>
-    <version>0.0.1</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
 
     <name>escn-generator</name>
@@ -60,7 +60,6 @@
 
     <profiles>
         <profile>
-            <!-- required, used in .github/workflows/sonatype-publish.yml -->
             <id>sonatypeDeploy</id>
             <build>
                 <plugins>

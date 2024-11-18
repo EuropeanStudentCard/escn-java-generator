@@ -6,15 +6,15 @@
 
     <groupId>eu.europeanstudentcard</groupId>
     <artifactId>escn-generator</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <packaging>jar</packaging>
 
     <name>escn-generator</name>
     <description>ESCN Generator is used to generate unique European Student Card Number (ESCN) for the "european student card" project.</description>
-    <url>http://europeanstudentcard.eu</url>
+    <url>https://github.com/EuropeanStudentCard/escn-java-generator</url>
     <organization>
         <name>European Student Card</name>
-        <url>http://europeanstudentcard.eu</url>
+        <url>https://github.com/EuropeanStudentCard</url>
     </organization>
     <licenses>
         <license>
